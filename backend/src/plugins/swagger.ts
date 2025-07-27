@@ -32,8 +32,12 @@ async function swagger(
       security: [{ bearerAuth: [] }],
       tags: [
         {
-          name: "Auth",
-          description: "Endpoints related to user authentication and login.",
+          name: "Usuarios",
+          description: "Rutas relacionadas a usuarios",
+        },
+        {
+          name: "Localidades",
+          description: "Rutas relacionadas a localidades",
         },
       ],
     },
