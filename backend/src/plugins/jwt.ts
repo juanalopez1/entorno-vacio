@@ -3,8 +3,8 @@ import jwt, { FastifyJWTOptions } from "@fastify/jwt";
 import { FastifyReply, FastifyRequest } from "fastify";
 
 const jwtOptions: FastifyJWTOptions = {
-  //secret: process.env.FASTIFY_SECRET || "", //El or es porque no puede ser undefined
-  secret: 'loqueespaunaespauna',
+  secret: process.env.FASTIFY_SECRET || "", //El or es porque no puede ser undefined
+  //secret: 'loqueespaunaespauna',
 };
 
 export default fp<FastifyJWTOptions>(async (fastify) => {
