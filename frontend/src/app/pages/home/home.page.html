@@ -1,0 +1,96 @@
+<ion-content class="ion-padding">
+  <form>
+    <ion-grid
+      class="ion-justify-content-center ion-align-items-center"
+      style="height: 100%"
+    >
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="12" size-md="6" size-lg="4">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title class="ion-text-center"
+                >Completa tus datos</ion-card-title
+              >
+            </ion-card-header>
+            <ion-card-content>
+              <ion-input
+                class="ion-margin-top"
+                fill="outline"
+                label="Nombre"
+                label-placement="stacked"
+                name="name"
+                [(ngModel)]="name"
+                required
+              >
+              </ion-input>
+              <ion-input
+                class="ion-margin-top"
+                fill="outline"
+                label="Apellido"
+                label-placement="stacked"
+                name="surname"
+                [(ngModel)]="surname"
+                required
+              >
+              </ion-input>
+              <ion-list>
+                <ion-item>
+                  <ion-select
+                    name="city"
+                    placeholder="Selecciona uno"
+                    [(ngModel)]="city"
+                  >
+                    <div slot="label">
+                      Departamento
+                      <ion-text color="danger">(Requerido)</ion-text>
+                    </div>
+                    <ion-select-option value="salto">SALTO</ion-select-option>
+                    <ion-select-option value="montevideo"
+                      >MONTEVIDEO</ion-select-option
+                    >
+                    <ion-select-option value="mercedes"
+                      >MERCEDES</ion-select-option
+                    >
+                    <ion-select-option value="artigas"
+                      >ARTIGAS</ion-select-option
+                    >
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+
+              <ion-list>
+                <ion-item [button]="true" (click)="this.reload()">
+                  <ion-select
+                    name="locality"
+                    placeholder="Selecciona una"
+                    [(ngModel)]="locality"
+                    >
+                    <div slot="label">
+                      Localidad
+                      <ion-text color="danger">(Requerido)</ion-text>
+                    </div>
+                    @if(this.values().length === 0){
+                    <ion-select-option disabled="true"
+                      >Departamento sin localidades</ion-select-option
+                    >
+                    } @for (item of this.values(); track $index) {
+                    <ion-select-option>{{item.name}}</ion-select-option>
+                    }
+                  </ion-select>
+                </ion-item>
+              </ion-list>
+              <ion-button
+                expand="block"
+                class="ion-margin-top"
+                (click)="onSubmit()"
+              >
+                Enviar
+              </ion-button>
+              <ion-text>{{this.messageResult()}}</ion-text>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

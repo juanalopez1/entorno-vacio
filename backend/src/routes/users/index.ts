@@ -11,7 +11,8 @@ const userRoutes = async (fastify: FastifyInstance, _opts: any) => {
           properties: {
             name: { type: "string", minLength: 1, maxLength: 20 },
             surname: { type: "string", minLength: 1, maxLength: 20 },
-            locality: { type: "string" },
+            city: { type: "string", minLength: 2, maxLength: 20 },
+            locality: { type: "string", minLength: 2 },
           },
           required: ["name", "surname", "locality"],
         },
@@ -24,9 +25,10 @@ const userRoutes = async (fastify: FastifyInstance, _opts: any) => {
                 properties: {
                   name: { type: "string", minLength: 1, maxLength: 20 },
                   surname: { type: "string", minLength: 1, maxLength: 20 },
-                  locality: { type: "string" },
+                  city: { type: "string", minLength: 2, maxLength: 20 },
+                  locality: { type: "string", minLength: 2 },
                 },
-                required: ["name", "surname", "locality"],
+                required: ["name", "surname", "city", "locality"],
               },
               message: { type: "string" },
             },
@@ -46,9 +48,10 @@ const userRoutes = async (fastify: FastifyInstance, _opts: any) => {
       },
     },
     async (request, reply) => {
-      const { name, surname, locality } = request.body as {
+      const { name, surname, city, locality } = request.body as {
         name: string;
         surname: string;
+        city: string;
         locality: string;
       };
 
@@ -59,13 +62,13 @@ const userRoutes = async (fastify: FastifyInstance, _opts: any) => {
           .send({ message: "Ese nombre ya esta en uso. Ingresa otro." });
       }
 
-      const user = userRepo.create({ name, surname, locality });
+      const user = userRepo.create({ name, surname, city, locality });
       return reply
         .status(201)
         .send({ user: user, message: "Usuario creado exitosamente." });
     }
   );
-  
+
   fastify.get(
     "/",
     {
@@ -78,16 +81,17 @@ const userRoutes = async (fastify: FastifyInstance, _opts: any) => {
               properties: {
                 name: { type: "string", minLength: 1, maxLength: 20 },
                 surname: { type: "string", minLength: 1, maxLength: 20 },
-                locality: { type: "string" },
+                city: { type: "string", minLength: 2, maxLength: 20 },
+                locality: { type: "string", minLength: 2, },
               },
-              required: ["name", "surname", "locality"],
+              required: ["name", "surname", "city", "locality"],
             },
           },
         },
         summary: "Obtener todos los usuarios.",
         description: "Ruta para obtener usuarios.",
         tags: ["Usuarios"],
-    },
+      },
     },
     async (request, reply) => {
       const users = await userRepo.findAll();
