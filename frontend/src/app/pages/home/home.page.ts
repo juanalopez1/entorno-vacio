@@ -25,7 +25,7 @@ import {
   IonSelect,
   IonInput,
 } from '@ionic/angular/standalone';
-import { UsersService } from 'src/app/services/users.service';
+import { UserService } from 'src/app/services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { LocalityService } from 'src/app/services/locality.service';
@@ -53,13 +53,20 @@ import { LocalityService } from 'src/app/services/locality.service';
     IonText,
   ],
 })
-export class HomePage {
+export class HomePage implements OnInit {
   public name = signal<string>('');
   public surname = signal<string>('');
   public city = signal<string>('');
   public locality = linkedSignal(() => this.values()[0].name);
-  private userService = inject(UsersService);
+  private userService = inject(UserService);
   private localityService = inject(LocalityService);
+
+  ngOnInit(): void {
+    const ws = new WebSocket('ws://localhost:3000/');
+    ws.addEventListener('message', (event) => {
+      console.log(event.data);
+    });
+  }
 
   public values = signal<any[]>([]);
 

@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class UsersService {
+export class UserService {
   private http = inject(HttpClient);
   private url = environment.apiUrl;
 
@@ -21,5 +21,10 @@ export class UsersService {
       locality: locality,
     };
     return firstValueFrom(this.http.post(urlComplete, body));
+  }
+
+  getAll() {
+    const urlComplete = this.url + 'users';
+    return firstValueFrom(this.http.get(urlComplete));
   }
 }
